@@ -11,7 +11,6 @@ import {
   type Transition,
 } from "framer-motion";
 
-// UI + AI elements
 import {
   Conversation,
   ConversationContent,
@@ -49,7 +48,6 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { CometCard } from "@/components/ui/comet-card";
 
-// Animations
 const springTransition: Transition = {
   type: "spring",
   stiffness: 140,
@@ -82,16 +80,16 @@ const personaOptions = [
 ] as const;
 
 const hiteshSuggestions = [
-  "Haanji, can you teach me JavaScript in simple words?",
+  "Achhese javaScript sikhni hai",
   "How do I build my first React project with chai in hand?",
   "Can you explain APIs with a practical example?",
-  "What is the best way to learn Python for web development?",
+  "Python se web development hota hai?",
   "Suggest some real-world projects to practice HTML, CSS, and JS.",
   "How do I prepare for a career in full-stack development?",
-  "Explain Git and GitHub like you’re teaching a beginner.",
-  "Share your favorite tips for staying motivated while coding.",
+  "Explain Git and GitHub",
+  "Share your favorite tips for staying motivated while coding",
   "How can I deploy my first Node.js app for free?",
-  "Tell me a chai aur code story from your programming journey.",
+  "Tell me a chai aur code story from your programming journey",
 ];
 
 const piyushSuggestions = [
@@ -110,7 +108,6 @@ const piyushSuggestions = [
 export default function HomePage() {
   const [showChat, setShowChat] = useState(false);
 
-  // Chat state
   const [input, setInput] = useState("");
   const [model, setModel] = useState<string>(models[0].value);
   const [persona, setPersona] = useState<PersonaId>("hitesh");
