@@ -22,6 +22,11 @@ function parseIncompleteMarkdown(text: string): string {
 
   let result = text;
 
+  // Strip common unwanted leading prefixes introduced by some personas/models
+  // Examples: "Hitesh Choudhary: ", "Piyush Garg:", "Summary: " (case-insensitive)
+  // Only strip if they appear right at the beginning to avoid removing legitimate content later.
+  result = result.replace(/^(?:\s*)(?:Hitesh\s+Choudhary\s*:\s*|Piyush\s+Garg\s*:\s*|Summary\s*:\s*)/i, '');
+
   // Handle incomplete links and images
   // Pattern: [...] or ![...] where the closing ] is missing
   const linkImagePattern = /(!?\[)([^\]]*?)$/;
@@ -309,23 +314,37 @@ const components: Options['components'] = {
       />
     );
   },
-  pre: ({ node, className, children }) => {
+  pre: (rawProps) => {
+    type UnknownPreProps = React.ComponentPropsWithoutRef<'pre'> & {
+      node?: unknown;
+      children?: React.ReactNode;
+      className?: string;
+    };
+    const { node, className, children } = rawProps as UnknownPreProps;
     let language = 'javascript';
 
-    if (typeof node?.properties?.className === 'string') {
-      language = node.properties.className.replace('language-', '');
+    const nodeElement = node as { properties?: { className?: string } } | undefined;
+    if (typeof nodeElement?.properties?.className === 'string') {
+      language = nodeElement.properties.className.replace('language-', '');
     }
 
     // Extract code content from children safely
-    let code = '';
-    if (
-      isValidElement(children) &&
-      children.props &&
-      typeof children.props.children === 'string'
-    ) {
-      code = children.props.children;
-    } else if (typeof children === 'string') {
-      code = children;
+    let code = '' as string;
+    try {
+      if (
+        isValidElement(children) &&
+        (children as React.ReactElement).props &&
+        typeof ((children as React.ReactElement).props as { children?: unknown }).children === 'string'
+      ) {
+        code = (
+          ((children as React.ReactElement).props as { children?: unknown })
+            .children as string
+        ) ?? '';
+      } else if (typeof children === 'string') {
+        code = children as string;
+      }
+    } catch {
+      // ignore – fallback to empty code block
     }
 
     return (

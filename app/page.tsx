@@ -19,7 +19,8 @@ import {
   PromptInputToolbar,
   PromptInputTools,
 } from '@/components/ai-elements/prompt-input';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import Link from 'next/link';
 import { useChat } from '@ai-sdk/react';
 import { Response } from '@/components/ai-elements/response';
 import { GlobeIcon } from 'lucide-react';
@@ -49,7 +50,14 @@ const models = [
   },
 ];
 
-const suggestions = [
+type PersonaId = 'hitesh' | 'piyush';
+
+const personaOptions = [
+  { name: 'Hitesh Choudhary', value: 'hitesh' },
+  { name: 'Piyush Garg', value: 'piyush' },
+] as const;
+
+const hiteshSuggestions = [
   'Haanji, can you teach me JavaScript in simple words?',
   'How do I build my first React project with chai in hand?',
   'Can you explain APIs with a practical example?',
@@ -59,15 +67,33 @@ const suggestions = [
   'Explain Git and GitHub like you’re teaching a beginner.',
   'Share your favorite tips for staying motivated while coding.',
   'How can I deploy my first Node.js app for free?',
-  'Tell me a chai aur code story from your programming journey.'
+  'Tell me a chai aur code story from your programming journey.',
+];
+
+const piyushSuggestions = [
+  'How to structure a scalable Next.js app?',
+  'Show me a minimal Zod schema for a login API.',
+  'What are pragmatic ways to improve API performance?',
+  'How to set up testing quickly for a TS project?',
+  'What trade-offs between Prisma and Drizzle?',
+  'How to add keyset pagination to a list endpoint?',
+  'Give a pattern for feature-based architecture in Next.js.',
+  'How to avoid N+1 queries with an ORM?',
+  'When to use Server Actions vs API routes?',
+  'What metrics should I monitor in production?',
 ];
 
 
 const ChatBotDemo = () => {
   const [input, setInput] = useState('');
   const [model, setModel] = useState<string>(models[0].value);
+  const [persona, setPersona] = useState<PersonaId>('hitesh');
   const [webSearch, setWebSearch] = useState(false);
   const { messages, sendMessage, status } = useChat();
+
+  const suggestions = useMemo(() => {
+    return persona === 'hitesh' ? hiteshSuggestions : piyushSuggestions;
+  }, [persona]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +104,7 @@ const ChatBotDemo = () => {
           body: {
             model: model,
             webSearch: webSearch,
+            persona: persona,
           },
         },
       );
@@ -86,18 +113,25 @@ const ChatBotDemo = () => {
   };
 
    const handleSuggestionClick = (suggestion: string) => {
-    sendMessage({ text: suggestion }, {
-          body: {
-            model: model,
-            webSearch: webSearch,
-          },
-        },);
+    sendMessage(
+      { text: suggestion },
+      {
+        body: {
+          model: model,
+          webSearch: webSearch,
+          persona: persona,
+        },
+      },
+    );
   };
 
 
   return (
     <div className="max-w-4xl mx-auto p-6 relative size-full h-screen">
-      <div className="absolute right-6 z-50">
+      <div className="absolute right-6 z-50 flex items-center gap-3">
+        <Link href="/showcase" className="text-sm text-muted-foreground hover:underline">
+          Showcase
+        </Link>
         <ModeToggle />
       </div>
       <div className="flex flex-col h-full">
@@ -203,6 +237,21 @@ const ChatBotDemo = () => {
                   {models.map((model) => (
                     <PromptInputModelSelectItem key={model.value} value={model.value}>
                       {model.name}
+                    </PromptInputModelSelectItem>
+                  ))}
+                </PromptInputModelSelectContent>
+              </PromptInputModelSelect>
+              <PromptInputModelSelect
+                onValueChange={(value) => setPersona(value as PersonaId)}
+                value={persona}
+              >
+                <PromptInputModelSelectTrigger>
+                  <PromptInputModelSelectValue />
+                </PromptInputModelSelectTrigger>
+                <PromptInputModelSelectContent>
+                  {personaOptions.map((p) => (
+                    <PromptInputModelSelectItem key={p.value} value={p.value}>
+                      {p.name}
                     </PromptInputModelSelectItem>
                   ))}
                 </PromptInputModelSelectContent>

@@ -13,8 +13,8 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  useCarousel,
 } from '@/components/ui/carousel';
+import { useCarousel } from '@/components/ui/carousel-context';
 import { ArrowLeftIcon, ArrowRightIcon } from 'lucide-react';
 
 export type InlineCitationProps = ComponentProps<'span'>;
