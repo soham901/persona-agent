@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { getAllPersonas, buildSystemPrompt } from '@/lib/personas';
 import { ModeToggle } from '@/components/ui/mode-toggle';
+import Image from 'next/image';
 
 const personas = getAllPersonas();
 
@@ -23,9 +24,8 @@ export default function ShowcasePage() {
 
       <Tabs defaultValue="data" className="w-full">
         <TabsList>
-          <TabsTrigger value="data">Data prep</TabsTrigger>
-          <TabsTrigger value="prompt">Prompt logic</TabsTrigger>
-          <TabsTrigger value="samples">Sample chats</TabsTrigger>
+          <TabsTrigger value="data">Data Summary</TabsTrigger>
+          <TabsTrigger value="samples">Sample Chats</TabsTrigger>
         </TabsList>
 
         <TabsContent value="data" className="mt-4">
@@ -78,29 +78,12 @@ export default function ShowcasePage() {
           </div>
         </TabsContent>
 
-        <TabsContent value="prompt" className="mt-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            {personas.map((p) => (
-              <Card key={p.id}>
-                <CardHeader>
-                  <CardTitle>System prompt – {p.displayName}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <pre className="whitespace-pre-wrap text-sm leading-6 p-3 rounded-md bg-muted/50">
-                    {buildSystemPrompt(p)}
-                  </pre>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-
         <TabsContent value="samples" className="mt-4">
           <div className="grid md:grid-cols-2 gap-4">
             {personas.map((p) => (
               <Card key={p.id}>
                 <CardHeader>
-                  <CardTitle>Sample chats – {p.displayName}</CardTitle>
+                  <CardTitle>Sample chats - {p.displayName}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {p.fewShots.map((fs, i) => (
