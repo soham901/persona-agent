@@ -35,6 +35,8 @@ import {
   ReasoningTrigger,
 } from '@/components/ai-elements/reasoning';
 import { Loader } from '@/components/ai-elements/loader';
+import { Suggestion, Suggestions } from '@/components/ai-elements/suggestion';
+import { ModeToggle } from '@/components/ui/mode-toggle';
 
 const models = [
   {
@@ -45,6 +47,12 @@ const models = [
     name: 'Deepseek R1',
     value: 'deepseek/deepseek-r1',
   },
+];
+
+const suggestions = [
+  'Can you explain how to play tennis?',
+  'What is the weather in Tokyo?',
+  'How do I make a really good fish taco?',
 ];
 
 const ChatBotDemo = () => {
@@ -69,8 +77,21 @@ const ChatBotDemo = () => {
     }
   };
 
+   const handleSuggestionClick = (suggestion: string) => {
+    sendMessage({ text: suggestion }, {
+          body: {
+            model: model,
+            webSearch: webSearch,
+          },
+        },);
+  };
+
+
   return (
     <div className="max-w-4xl mx-auto p-6 relative size-full h-screen">
+      <div className="absolute right-6 z-50">
+        <ModeToggle />
+      </div>
       <div className="flex flex-col h-full">
         <Conversation className="h-full">
           <ConversationContent>
@@ -136,6 +157,16 @@ const ChatBotDemo = () => {
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
+
+        <Suggestions>
+            {suggestions.map((suggestion) => (
+              <Suggestion
+                key={suggestion}
+                onClick={handleSuggestionClick}
+                suggestion={suggestion}
+              />
+            ))}
+          </Suggestions>
 
         <PromptInput onSubmit={handleSubmit} className="mt-4">
           <PromptInputTextarea
