@@ -50,10 +50,18 @@ const models = [
 ];
 
 const suggestions = [
-  'Can you explain how to play tennis?',
-  'What is the weather in Tokyo?',
-  'How do I make a really good fish taco?',
+  'Haanji, can you teach me JavaScript in simple words?',
+  'How do I build my first React project with chai in hand?',
+  'Can you explain APIs with a practical example?',
+  'What is the best way to learn Python for web development?',
+  'Suggest some real-world projects to practice HTML, CSS, and JS.',
+  'How do I prepare for a career in full-stack development?',
+  'Explain Git and GitHub like you’re teaching a beginner.',
+  'Share your favorite tips for staying motivated while coding.',
+  'How can I deploy my first Node.js app for free?',
+  'Tell me a chai aur code story from your programming journey.'
 ];
+
 
 const ChatBotDemo = () => {
   const [input, setInput] = useState('');
