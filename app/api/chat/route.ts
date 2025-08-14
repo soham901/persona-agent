@@ -1,5 +1,5 @@
-import { streamText, UIMessage, convertToModelMessages } from 'ai';
-import { buildSystemPrompt, getPersonaById } from '@/lib/personas';
+import { streamText, UIMessage, convertToModelMessages } from "ai";
+import { buildSystemPrompt, getPersonaById } from "@/lib/personas";
 
 export const maxDuration = 30;
 
@@ -8,19 +8,19 @@ export async function POST(req: Request) {
     messages,
     model,
     webSearch,
-    persona = 'hitesh',
+    persona = "hitesh",
   }: {
     messages: UIMessage[];
     model: string;
     webSearch: boolean;
-    persona?: 'hitesh' | 'piyush';
+    persona?: "hitesh" | "piyush";
   } = await req.json();
 
   const personaData = getPersonaById(persona);
   const system = buildSystemPrompt(personaData);
 
   const result = streamText({
-    model: webSearch ? 'perplexity/sonar' : model,
+    model: webSearch ? "perplexity/sonar" : model,
     messages: convertToModelMessages(messages),
     system,
   });

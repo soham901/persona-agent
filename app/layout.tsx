@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Rubik as Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 
@@ -14,9 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Persona Agent – Hitesh & Piyush Tones',
+  title: "Persona Agent – Hitesh & Piyush Tones",
   description:
-    'Chat with LLM personas tuned for Hitesh Choudhary and Piyush Garg. Includes data prep, prompt logic, and sample chats.',
+    "Chat with LLM personas tuned for Hitesh Choudhary and Piyush Garg. Includes data prep, prompt logic, and sample chats.",
 };
 
 export default function RootLayout({
@@ -30,13 +30,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
         >
-        {children}
-          </ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

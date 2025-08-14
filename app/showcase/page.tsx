@@ -1,11 +1,10 @@
 "use client";
 
-import Link from 'next/link';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getAllPersonas, buildSystemPrompt } from '@/lib/personas';
-import { ModeToggle } from '@/components/ui/mode-toggle';
-import Image from 'next/image';
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getAllPersonas, buildSystemPrompt } from "@/lib/personas";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const personas = getAllPersonas();
 
@@ -15,7 +14,10 @@ export default function ShowcasePage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-semibold">Persona Showcase</h1>
         <div className="flex items-center gap-3">
-          <Link href="/" className="text-sm text-muted-foreground hover:underline">
+          <Link
+            href="/"
+            className="text-sm text-muted-foreground hover:underline"
+          >
             Chat
           </Link>
           <ModeToggle />
@@ -40,16 +42,16 @@ export default function ShowcasePage() {
                     <div className="text-sm font-medium mb-1">Tone</div>
                     <ul className="text-sm list-disc pl-5">
                       <li>Language: {p.tone.language}</li>
-                      <li>Style: {p.tone.style.join(', ')}</li>
-                      <li>Catchphrases: {p.tone.catchphrases.join(' | ')}</li>
+                      <li>Style: {p.tone.style.join(", ")}</li>
+                      <li>Catchphrases: {p.tone.catchphrases.join(" | ")}</li>
                     </ul>
                   </div>
                   <div>
                     <div className="text-sm font-medium mb-1">Defaults</div>
                     <ul className="text-sm list-disc pl-5">
-                      <li>Stack: {p.defaults.stack.join(', ')}</li>
-                      <li>Tools: {p.defaults.tools.join(', ')}</li>
-                      <li>Deployment: {p.defaults.deployment.join(', ')}</li>
+                      <li>Stack: {p.defaults.stack.join(", ")}</li>
+                      <li>Tools: {p.defaults.tools.join(", ")}</li>
+                      <li>Deployment: {p.defaults.deployment.join(", ")}</li>
                     </ul>
                   </div>
                   <div>
@@ -65,7 +67,12 @@ export default function ShowcasePage() {
                     <ul className="text-sm list-disc pl-5">
                       {p.sources.map((s) => (
                         <li key={s.url}>
-                          <a className="underline" href={s.url} target="_blank" rel="noreferrer">
+                          <a
+                            className="underline"
+                            href={s.url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
                             {s.label}
                           </a>
                         </li>

@@ -9,13 +9,13 @@ A Next.js website that uses an LLM to mimic the tones of Hitesh Choudhary and Pi
 
 ### Setup
 
-1) Install deps
+1. Install deps
 
 ```bash
 pnpm install
 ```
 
-2) Environment variables (choose what you need):
+2. Environment variables (choose what you need):
 
 - `OPENAI_API_KEY` for `openai/gpt-4o`
 - `DEEPSEEK_API_KEY` for `deepseek/deepseek-r1`
@@ -30,7 +30,7 @@ DEEPSEEK_API_KEY=...
 PERPLEXITY_API_KEY=...
 ```
 
-3) Run locally
+3. Run locally
 
 ```bash
 pnpm dev

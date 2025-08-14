@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
+import Image from "next/image";
 import {
   Conversation,
   ConversationContent,
   ConversationScrollButton,
-} from '@/components/ai-elements/conversation';
-import { Message, MessageContent } from '@/components/ai-elements/message';
+} from "@/components/ai-elements/conversation";
+import { Message, MessageContent } from "@/components/ai-elements/message";
 import {
   PromptInput,
   PromptInputButton,
@@ -18,81 +19,80 @@ import {
   PromptInputTextarea,
   PromptInputToolbar,
   PromptInputTools,
-} from '@/components/ai-elements/prompt-input';
-import { useMemo, useState } from 'react';
-import Link from 'next/link';
-import { useChat } from '@ai-sdk/react';
-import { Response } from '@/components/ai-elements/response';
-import { GlobeIcon } from 'lucide-react';
+} from "@/components/ai-elements/prompt-input";
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useChat } from "@ai-sdk/react";
+import { Response } from "@/components/ai-elements/response";
+import { GlobeIcon } from "lucide-react";
 import {
   Source,
   Sources,
   SourcesContent,
   SourcesTrigger,
-} from '@/components/ai-elements/source';
+} from "@/components/ai-elements/source";
 import {
   Reasoning,
   ReasoningContent,
   ReasoningTrigger,
-} from '@/components/ai-elements/reasoning';
-import { Loader } from '@/components/ai-elements/loader';
-import { Suggestion, Suggestions } from '@/components/ai-elements/suggestion';
-import { ModeToggle } from '@/components/ui/mode-toggle';
+} from "@/components/ai-elements/reasoning";
+import { Loader } from "@/components/ai-elements/loader";
+import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
+import { ModeToggle } from "@/components/ui/mode-toggle";
 
 const models = [
   {
-    name: 'GPT 4o',
-    value: 'openai/gpt-4o',
+    name: "GPT 4o",
+    value: "openai/gpt-4o",
   },
   {
-    name: 'Deepseek R1',
-    value: 'deepseek/deepseek-r1',
+    name: "Deepseek R1",
+    value: "deepseek/deepseek-r1",
   },
 ];
 
-type PersonaId = 'hitesh' | 'piyush';
+type PersonaId = "hitesh" | "piyush";
 
 const personaOptions = [
-  { name: 'Hitesh Choudhary', value: 'hitesh' },
-  { name: 'Piyush Garg', value: 'piyush' },
+  { name: "Hitesh Choudhary", value: "hitesh" },
+  { name: "Piyush Garg", value: "piyush" },
 ] as const;
 
 const hiteshSuggestions = [
-  'Haanji, can you teach me JavaScript in simple words?',
-  'How do I build my first React project with chai in hand?',
-  'Can you explain APIs with a practical example?',
-  'What is the best way to learn Python for web development?',
-  'Suggest some real-world projects to practice HTML, CSS, and JS.',
-  'How do I prepare for a career in full-stack development?',
-  'Explain Git and GitHub like you’re teaching a beginner.',
-  'Share your favorite tips for staying motivated while coding.',
-  'How can I deploy my first Node.js app for free?',
-  'Tell me a chai aur code story from your programming journey.',
+  "Haanji, can you teach me JavaScript in simple words?",
+  "How do I build my first React project with chai in hand?",
+  "Can you explain APIs with a practical example?",
+  "What is the best way to learn Python for web development?",
+  "Suggest some real-world projects to practice HTML, CSS, and JS.",
+  "How do I prepare for a career in full-stack development?",
+  "Explain Git and GitHub like you’re teaching a beginner.",
+  "Share your favorite tips for staying motivated while coding.",
+  "How can I deploy my first Node.js app for free?",
+  "Tell me a chai aur code story from your programming journey.",
 ];
 
 const piyushSuggestions = [
-  'How to structure a scalable Next.js app?',
-  'Show me a minimal Zod schema for a login API.',
-  'What are pragmatic ways to improve API performance?',
-  'How to set up testing quickly for a TS project?',
-  'What trade-offs between Prisma and Drizzle?',
-  'How to add keyset pagination to a list endpoint?',
-  'Give a pattern for feature-based architecture in Next.js.',
-  'How to avoid N+1 queries with an ORM?',
-  'When to use Server Actions vs API routes?',
-  'What metrics should I monitor in production?',
+  "How to structure a scalable Next.js app?",
+  "Show me a minimal Zod schema for a login API.",
+  "What are pragmatic ways to improve API performance?",
+  "How to set up testing quickly for a TS project?",
+  "What trade-offs between Prisma and Drizzle?",
+  "How to add keyset pagination to a list endpoint?",
+  "Give a pattern for feature-based architecture in Next.js.",
+  "How to avoid N+1 queries with an ORM?",
+  "When to use Server Actions vs API routes?",
+  "What metrics should I monitor in production?",
 ];
 
-
 const ChatBotDemo = () => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [model, setModel] = useState<string>(models[0].value);
-  const [persona, setPersona] = useState<PersonaId>('hitesh');
+  const [persona, setPersona] = useState<PersonaId>("hitesh");
   const [webSearch, setWebSearch] = useState(false);
   const { messages, sendMessage, status } = useChat();
 
   const suggestions = useMemo(() => {
-    return persona === 'hitesh' ? hiteshSuggestions : piyushSuggestions;
+    return persona === "hitesh" ? hiteshSuggestions : piyushSuggestions;
   }, [persona]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -108,11 +108,11 @@ const ChatBotDemo = () => {
           },
         },
       );
-      setInput('');
+      setInput("");
     }
   };
 
-   const handleSuggestionClick = (suggestion: string) => {
+  const handleSuggestionClick = (suggestion: string) => {
     sendMessage(
       { text: suggestion },
       {
@@ -125,11 +125,13 @@ const ChatBotDemo = () => {
     );
   };
 
-
   return (
     <div className="max-w-4xl mx-auto p-6 relative size-full h-screen">
       <div className="absolute right-6 z-50 flex items-center gap-3">
-        <Link href="/showcase" className="text-sm text-muted-foreground hover:underline">
+        <Link
+          href="/showcase"
+          className="text-sm text-muted-foreground hover:underline"
+        >
           Showcase
         </Link>
         <ModeToggle />
@@ -139,17 +141,17 @@ const ChatBotDemo = () => {
           <ConversationContent>
             {messages.map((message) => (
               <div key={message.id}>
-                {message.role === 'assistant' && (
+                {message.role === "assistant" && (
                   <Sources>
                     {message.parts.map((part, i) => {
                       switch (part.type) {
-                        case 'source-url':
+                        case "source-url":
                           return (
                             <>
                               <SourcesTrigger
                                 count={
                                   message.parts.filter(
-                                    (part) => part.type === 'source-url',
+                                    (part) => part.type === "source-url",
                                   ).length
                                 }
                               />
@@ -170,18 +172,18 @@ const ChatBotDemo = () => {
                   <MessageContent>
                     {message.parts.map((part, i) => {
                       switch (part.type) {
-                        case 'text':
+                        case "text":
                           return (
                             <Response key={`${message.id}-${i}`}>
                               {part.text}
                             </Response>
                           );
-                        case 'reasoning':
+                        case "reasoning":
                           return (
                             <Reasoning
                               key={`${message.id}-${i}`}
                               className="w-full"
-                              isStreaming={status === 'streaming'}
+                              isStreaming={status === "streaming"}
                             >
                               <ReasoningTrigger />
                               <ReasoningContent>{part.text}</ReasoningContent>
@@ -195,20 +197,20 @@ const ChatBotDemo = () => {
                 </Message>
               </div>
             ))}
-            {status === 'submitted' && <Loader />}
+            {status === "submitted" && <Loader />}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
 
         <Suggestions>
-            {suggestions.map((suggestion) => (
-              <Suggestion
-                key={suggestion}
-                onClick={handleSuggestionClick}
-                suggestion={suggestion}
-              />
-            ))}
-          </Suggestions>
+          {suggestions.map((suggestion) => (
+            <Suggestion
+              key={suggestion}
+              onClick={handleSuggestionClick}
+              suggestion={suggestion}
+            />
+          ))}
+        </Suggestions>
 
         <PromptInput onSubmit={handleSubmit} className="mt-4">
           <PromptInputTextarea
@@ -218,7 +220,7 @@ const ChatBotDemo = () => {
           <PromptInputToolbar>
             <PromptInputTools>
               <PromptInputButton
-                variant={webSearch ? 'default' : 'ghost'}
+                variant={webSearch ? "default" : "ghost"}
                 onClick={() => setWebSearch(!webSearch)}
               >
                 <GlobeIcon size={16} />
@@ -235,7 +237,10 @@ const ChatBotDemo = () => {
                 </PromptInputModelSelectTrigger>
                 <PromptInputModelSelectContent>
                   {models.map((model) => (
-                    <PromptInputModelSelectItem key={model.value} value={model.value}>
+                    <PromptInputModelSelectItem
+                      key={model.value}
+                      value={model.value}
+                    >
                       {model.name}
                     </PromptInputModelSelectItem>
                   ))}

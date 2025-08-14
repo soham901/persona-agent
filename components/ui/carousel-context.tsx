@@ -1,3 +1,3 @@
 "use client";
 
-export { useCarousel } from './carousel';
+export { useCarousel } from "./carousel";
