@@ -180,7 +180,7 @@ export default function HomePage() {
               variants={fadeInUp}
               className="bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-balance text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight text-transparent"
             >
-              Chat with Personality
+              Chat with AI Personalities
             </motion.h1>
 
             <motion.p
