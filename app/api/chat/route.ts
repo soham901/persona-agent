@@ -36,12 +36,10 @@ export async function POST(req: Request) {
   const {
     messages,
     model,
-    webSearch,
     persona = "hitesh",
   }: {
     messages: UIMessage[];
     model: string;
-    webSearch: boolean;
     persona?: "hitesh" | "piyush";
   } = await req.json();
 
@@ -278,11 +276,11 @@ export async function POST(req: Request) {
   });
 
   const result = streamText({
-    model: webSearch ? "perplexity/sonar" : model,
+    model: model,
     messages: convertToModelMessages(messages),
     system,
     tools: {
-      // webSearchTool,
+      webSearchTool,
       youtubeSearchTool,
     },
     stopWhen: stepCountIs(5),

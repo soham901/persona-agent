@@ -6,7 +6,7 @@ import { memo, isValidElement } from "react";
 import ReactMarkdown, { type Options } from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
-import remarkMath from "remarkMath";
+import remarkMath from "remark-math";
 import { cn } from "@/lib/utils";
 import "katex/dist/katex.min.css";
 import hardenReactMarkdown from "harden-react-markdown";
@@ -97,7 +97,8 @@ function parseIncompleteMarkdown(text: string): string {
       for (let i = 0; i < result.length; i++) {
         if (result[i] === "`") {
           const isTripleStart = result.substring(i, i + 3) === "```";
-          const isTripleMiddle = i > 0 && result.substring(i - 1, i + 2) === "```";
+          const isTripleMiddle =
+            i > 0 && result.substring(i - 1, i + 2) === "```";
           const isTripleEnd = i > 1 && result.substring(i - 2, i + 1) === "```";
 
           if (!isTripleStart && !isTripleMiddle && !isTripleEnd) {
@@ -143,7 +144,10 @@ export type ResponseProps = HTMLAttributes<HTMLDivElement> & {
 
 const components: Options["components"] = {
   ol: ({ children, className, ...props }) => (
-    <ol className={cn("ml-4 list-outside list-decimal space-y-0.25", className)} {...props}>
+    <ol
+      className={cn("ml-4 list-outside list-decimal space-y-0.25", className)}
+      {...props}
+    >
       {children}
     </ol>
   ),
@@ -153,7 +157,10 @@ const components: Options["components"] = {
     </li>
   ),
   ul: ({ children, className, ...props }) => (
-    <ul className={cn("ml-4 list-outside list-disc space-y-0.25", className)} {...props}>
+    <ul
+      className={cn("ml-4 list-outside list-disc space-y-0.25", className)}
+      {...props}
+    >
       {children}
     </ul>
   ),
@@ -189,12 +196,18 @@ const components: Options["components"] = {
     </h2>
   ),
   h3: ({ children, className, ...props }) => (
-    <h3 className={cn("mt-1.5 mb-0.25 font-semibold text-sm", className)} {...props}>
+    <h3
+      className={cn("mt-1.5 mb-0.25 font-semibold text-sm", className)}
+      {...props}
+    >
       {children}
     </h3>
   ),
   h4: ({ children, className, ...props }) => (
-    <h4 className={cn("mt-1.5 mb-0.25 font-semibold text-xs", className)} {...props}>
+    <h4
+      className={cn("mt-1.5 mb-0.25 font-semibold text-xs", className)}
+      {...props}
+    >
       {children}
     </h4>
   ),
@@ -207,7 +220,10 @@ const components: Options["components"] = {
     </h5>
   ),
   h6: ({ children, className, ...props }) => (
-    <h6 className={cn("mt-1.5 mb-0.25 font-semibold text-xs", className)} {...props}>
+    <h6
+      className={cn("mt-1.5 mb-0.25 font-semibold text-xs", className)}
+      {...props}
+    >
       {children}
     </h6>
   ),

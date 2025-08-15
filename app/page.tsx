@@ -88,7 +88,7 @@ const personaOptions = [
 ] as const;
 
 const hiteshSuggestions = [
-  "JavaScript sikhni hai, free me",
+  "JavaScript sikhni hai, youtube se",
   "How do I build my first React project with chai in hand?",
   "Can you explain APIs with a practical example?",
   "Python se web development hota hai?",
