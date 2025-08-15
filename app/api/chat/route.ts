@@ -9,7 +9,7 @@ import { buildSystemPrompt, getPersonaById } from "@/lib/personas";
 import Exa from "exa-js";
 import { z } from "zod";
 
-export const maxDuration = 30;
+// export const maxDuration = 30;
 
 const exa = new Exa(process.env.EXA_API_KEY);
 
