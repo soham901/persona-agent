@@ -411,12 +411,17 @@ export default function HomePage() {
                                 .map((tp, idx) => {
                                   const toolPart = tp as unknown as ToolUIPart;
                                   const rawOutput = (toolPart as any).output;
-                                  const isYouTubeTool = (toolPart as any).type === "tool-youtubeSearchTool";
+                                  const isYouTubeTool =
+                                    (toolPart as any).type ===
+                                    "tool-youtubeSearchTool";
                                   // Parse YouTube items if present
                                   let ytItems: any[] | undefined = undefined;
                                   try {
                                     if (isYouTubeTool && rawOutput) {
-                                      const obj = typeof rawOutput === "string" ? JSON.parse(rawOutput) : rawOutput;
+                                      const obj =
+                                        typeof rawOutput === "string"
+                                          ? JSON.parse(rawOutput)
+                                          : rawOutput;
                                       if (obj && Array.isArray(obj.items)) {
                                         ytItems = obj.items;
                                       }
@@ -426,33 +431,53 @@ export default function HomePage() {
                                   return (
                                     <Tool
                                       key={`tool-${message.id}-${idx}`}
-                                      defaultOpen={toolPart.state !== "output-available"}
+                                      defaultOpen={
+                                        toolPart.state !== "output-available"
+                                      }
                                     >
                                       <ToolHeader
-                                        type={(toolPart as any).type.replace("tool-", "")}
+                                        type={(toolPart as any).type.replace(
+                                          "tool-",
+                                          "",
+                                        )}
                                         state={toolPart.state}
                                       />
                                       <ToolContent>
                                         {(toolPart as any).input && (
-                                          <ToolInput input={(toolPart as any).input} />
+                                          <ToolInput
+                                            input={(toolPart as any).input}
+                                          />
                                         )}
 
                                         {/* Embed YouTube results if available */}
-                                        {isYouTubeTool && ytItems && ytItems.length > 0 ? (
+                                        {isYouTubeTool &&
+                                        ytItems &&
+                                        ytItems.length > 0 ? (
                                           <div className="p-4 pt-2">
-                                            <YouTubeEmbeds items={ytItems} limit={6} />
+                                            <YouTubeEmbeds
+                                              items={ytItems}
+                                              limit={6}
+                                            />
                                           </div>
                                         ) : null}
 
                                         <ToolOutput
-                                          output={rawOutput ? (
-                                            <Response>
-                                              {typeof rawOutput === "string"
-                                                ? rawOutput
-                                                : JSON.stringify(rawOutput, null, 2)}
-                                            </Response>
-                                          ) : undefined}
-                                          errorText={(toolPart as any).errorText as any}
+                                          output={
+                                            rawOutput ? (
+                                              <Response>
+                                                {typeof rawOutput === "string"
+                                                  ? rawOutput
+                                                  : JSON.stringify(
+                                                      rawOutput,
+                                                      null,
+                                                      2,
+                                                    )}
+                                              </Response>
+                                            ) : undefined
+                                          }
+                                          errorText={
+                                            (toolPart as any).errorText as any
+                                          }
                                         />
                                       </ToolContent>
                                     </Tool>

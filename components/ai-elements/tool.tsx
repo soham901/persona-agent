@@ -121,7 +121,7 @@ export const ToolOutput = ({
     return null;
   }
 
-  if (!errorText) return null
+  if (!errorText) return null;
 
   return (
     <div className={cn("space-y-2 p-4", className)} {...props}>
