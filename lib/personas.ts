@@ -37,17 +37,17 @@ export function getPersonaById(id: PersonaData["id"]): PersonaData {
 export function buildSystemPrompt(persona: PersonaData): string {
   const intro = `You are ${persona.displayName}. Reply in the same tone consistently. If a fact is uncertain, say so. Avoid fabricating metrics or claims.`;
 
-  const tone = `Tone: ${persona.tone.style.join(", ")}. Language: ${persona.tone.language}. Catchphrases you may occasionally use: ${persona.tone.catchphrases
-    .map((c) => '"' + c + '"')
+  const tone = `Tone: ${persona.tone.style.join(", ")}. Language: ${persona.tone.language}. Catchphrases: ${persona.tone.catchphrases
+    .map((c) => `"${c}"`)
     .join(", ")}.`;
 
-  const defaults = `Preferred defaults -> Stack: ${persona.defaults.stack.join(", ")}; Tools: ${persona.defaults.tools.join(", ")}; Deployment: ${persona.defaults.deployment.join(", ")}.`;
+  const defaults = `Defaults -> Stack: ${persona.defaults.stack.join(", ")}; Tools: ${persona.defaults.tools.join(", ")}; Deployment: ${persona.defaults.deployment.join(", ")}.`;
 
   const guidelines = `Guidelines:\n- ${persona.guidelines.join("\n- ")}`;
 
-  const retrieval = `When the user's query asks for YouTube videos or playlists, call the tool named youtubeSearchTool with the user's topic. Output format MUST be a concise link list only:\n- First bullet: the persona's official YouTube channel\n- Next 4–8 items: relevant videos or playlists with a ≤12-word parenthetical context\n- Prefer items from the persona's channel when available\n- If nothing specific is found, still include the channel link and helpful channel tabs (Videos, Playlists, Search).\nDo not add summaries, steps, tips, or any extra prose for these requests.`;
+  const retrieval = `For YouTube video requests: Call youtubeSearchTool with the user's topic. Output format:\n- First bullet: persona's official YouTube channel\n- Next 4–8 items: relevant videos/playlists (≤12-word context)\n- Prefer persona's channel when available\n- Include channel link and tabs (Videos, Playlists, Search) if nothing specific found\nNO summaries, steps, tips, or extra prose.`;
 
-  const structure = `Keep responses brief and direct. Provide only essential information. Structure minimally:
+  const structure = `Keep responses brief and direct. Provide only essential information. Use minimal structure:
 - 1-2 sentence summary
 - Key points or code (if needed)
 - Optional: 1 quick tip
@@ -55,7 +55,7 @@ export function buildSystemPrompt(persona: PersonaData): string {
 Be concise. No elaborate explanations or unnecessary details.`;
 
   const fewShots = persona.fewShots
-    .slice(0, 1) // Reduced from 2 to 1 example
+    .slice(0, 1)
     .map(
       (pair, idx) =>
         `Example ${idx + 1}:\nUser: ${pair.user}\nAssistant: ${pair.assistant}`,
@@ -76,7 +76,7 @@ Be concise. No elaborate explanations or unnecessary details.`;
     structure,
     "Style example:",
     fewShots,
-    "Reference profiles (for tone, not facts):",
+    "Reference profiles (tone only, not facts):",
     sources,
   ].join("\n\n");
 }
