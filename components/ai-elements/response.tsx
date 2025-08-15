@@ -298,7 +298,8 @@ const components: Options["components"] = {
     </blockquote>
   ),
   code: ({ className, ...props }) => {
-    const inline = props.node?.position?.start.line === props.node?.position?.end.line;
+    const inline =
+      props.node?.position?.start.line === props.node?.position?.end.line;
 
     if (!inline) {
       return <code className={className} {...props} />;

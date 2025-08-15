@@ -54,7 +54,7 @@ export default function RootLayout({
                   About
                 </Link>
                 <a
-                  href="https://github.com/soham901"
+                  href="https://github.com/soham901/persona-agent"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-foreground hover:underline"

@@ -14,8 +14,8 @@ export const Image = ({
   ...props
 }: ImageProps) => {
   // Convert uint8Array to base64 string if needed
-  const imageData = uint8Array 
-    ? `data:${mediaType};base64,${Buffer.from(uint8Array).toString('base64')}`
+  const imageData = uint8Array
+    ? `data:${mediaType};base64,${Buffer.from(uint8Array).toString("base64")}`
     : `data:${mediaType};base64,${base64}`;
 
   return (

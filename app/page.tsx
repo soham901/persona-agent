@@ -89,7 +89,7 @@ const personaOptions = [
 ] as const;
 
 const hiteshSuggestions = [
-  "Achhese javaScript sikhni hai",
+  "JavaScript sikhni hai, free me",
   "How do I build my first React project with chai in hand?",
   "Can you explain APIs with a practical example?",
   "Python se web development hota hai?",
@@ -113,9 +113,6 @@ const piyushSuggestions = [
   "When to use Server Actions vs API routes?",
   "What metrics should I monitor in production?",
 ];
-
-
-
 
 export default function HomePage() {
   const [showChat, setShowChat] = useState(false);
@@ -150,17 +147,15 @@ export default function HomePage() {
     );
   };
 
-  
-
   return (
-    <div className="relative min-h-dvh overflow-x-clip">
+    <div className="relative min-h-[calc(100dvh-4rem)] overflow-x-clip">
       {/* Background accents (same as landing) */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.6 }}
           transition={{ duration: 1.2 }}
-          className="absolute left-1/2 top-[-10%] size-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-500/20 via-sky-400/20 to-fuchsia-400/20 blur-3xl"
+          className="absolute left-1/2 top-[-10%] size-[30rem] sm:size-[40rem] md:size-[48rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-indigo-500/20 via-sky-400/20 to-fuchsia-400/20 blur-3xl"
         />
       </div>
 
@@ -173,7 +168,7 @@ export default function HomePage() {
             initial="hidden"
             animate="show"
             exit={{ opacity: 0, scale: 0.98, filter: "blur(2px)" }}
-            className="mx-auto flex max-w-6xl flex-col items-center px-6 pt-28 md:pt-32"
+            className="mx-auto flex max-w-6xl flex-col items-center px-4 sm:px-6 pt-6 sm:pt-8 md:pt-10"
           >
             <motion.span
               variants={fadeInUp}
@@ -185,14 +180,14 @@ export default function HomePage() {
 
             <motion.h1
               variants={fadeInUp}
-              className="bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-balance text-4xl font-semibold leading-tight text-transparent md:text-6xl"
+              className="bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-balance text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight text-transparent"
             >
               Chat with Personality
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
-              className="mt-4 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg text-center"
+              className="mt-4 max-w-2xl text-pretty text-base text-muted-foreground text-center px-2"
             >
               Build AI chats that feel human. Pick a ready-made persona or
               create your own, and start real conversations in minutes.
@@ -200,17 +195,21 @@ export default function HomePage() {
 
             <motion.div
               variants={fadeInUp}
-              className="mt-8 flex flex-wrap items-center justify-center gap-3"
+              className="mt-6 sm:mt-8 flex flex-wrap items-center justify-center gap-3"
             >
               <Button
                 size="lg"
-                className="gap-2"
+                className="gap-2 w-full sm:w-auto"
                 onClick={() => setShowChat(true)}
               >
                 Start Chatting
               </Button>
-              <a href="#features">
-                <Button size="lg" variant="outline">
+              <a href="#features" className="w-full sm:w-auto">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto"
+                >
                   See Features
                 </Button>
               </a>
@@ -218,7 +217,7 @@ export default function HomePage() {
 
             <motion.div
               variants={fadeInUp}
-              className="relative mt-12 w-full max-w-5xl"
+              className="relative mt-8 sm:mt-10 w-full max-w-5xl"
             >
               <CometCard className="w-full">
                 <motion.button
@@ -226,9 +225,9 @@ export default function HomePage() {
                   whileHover={{ filter: "saturate(1)" }}
                   transition={{ ease: "circInOut", duration: 0.4 }}
                   type="button"
-                  className="my-10 flex w-full cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-[#1F2121] p-2 md:my-20 md:p-4"
+                  className="my-6 sm:my-8 md:my-10 flex w-full cursor-pointer flex-col items-stretch rounded-[16px] border-0 bg-[#1F2121] p-2 sm:p-3 md:p-4"
                 >
-                  <div className="mx-2 flex-1">
+                  <div className="mx-1 sm:mx-2 flex-1">
                     <div className="relative mt-2 aspect-[16/9] w-full">
                       <Image
                         loading="lazy"
@@ -250,9 +249,9 @@ export default function HomePage() {
             {/* Features */}
             <section
               id="features"
-              className="mx-auto mt-12 w-full max-w-6xl pb-8"
+              className="mx-auto mt-8 sm:mt-10 w-full max-w-6xl pb-6 sm:pb-8"
             >
-              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {[
                   {
                     title: "Realtime UI",
@@ -278,7 +277,7 @@ export default function HomePage() {
                       stiffness: 140,
                       damping: 18,
                     }}
-                    className="rounded-xl border p-5"
+                    className="rounded-xl border p-4 sm:p-5"
                   >
                     <div className="text-sm font-medium text-primary">
                       {String(i + 1).padStart(2, "0")}
@@ -304,9 +303,9 @@ export default function HomePage() {
             initial="hidden"
             animate="show"
             exit={{ opacity: 0, y: 8 }}
-            className="max-w-4xl mx-auto p-6 relative size-full min-h-screen"
+            className="max-w-4xl mx-auto w-full px-4 sm:px-6 relative"
           >
-            <div className="flex flex-col h-[94dvh]">
+            <div className="flex flex-col h-[calc(100dvh-3.5rem-1rem)] sm:h-[calc(100dvh-3.5rem-2rem)]">
               <Conversation className="h-full">
                 <ConversationContent>
                   {messages.map((message) => (
@@ -340,6 +339,146 @@ export default function HomePage() {
                       )}
                       <Message from={message.role} key={message.id}>
                         <MessageContent>
+                          {/* Inline tool calls rendering for this message */}
+                          {message.parts.filter((p) =>
+                            p.type.startsWith("tool-"),
+                          ).length > 0 && (
+                            <div className="mt-2 space-y-2">
+                              {message.parts
+                                .filter((p) => p.type.startsWith("tool-"))
+                                .map((tp, idx) => {
+                                  const toolPart = tp as unknown as ToolUIPart;
+                                  const rawOutput = toolPart.output;
+                                  const toolType = toolPart.type;
+                                  // Treat both youtubeSearchTool and webSearchTool as potential sources of YT links
+                                  const isYouTubeTool =
+                                    toolType === "tool-youtubeSearchTool" ||
+                                    toolType === "tool-webSearchTool";
+                                  let ytItems: YTItem[] | undefined = undefined;
+                                  try {
+                                    if (rawOutput && isYouTubeTool) {
+                                      const parsed =
+                                        typeof rawOutput === "string"
+                                          ? JSON.parse(rawOutput)
+                                          : rawOutput;
+
+                                      // youtubeSearchTool returns { items: [...] }
+                                      if (
+                                        toolType === "tool-youtubeSearchTool" &&
+                                        parsed &&
+                                        Array.isArray(parsed.items)
+                                      ) {
+                                        ytItems = parsed.items;
+                                      }
+
+                                      // webSearchTool returns an array; map YouTube URLs to YTItem[]
+                                      if (
+                                        toolType === "tool-webSearchTool" &&
+                                        Array.isArray(parsed)
+                                      ) {
+                                        ytItems = parsed
+                                          .filter(
+                                            (r: { url: string }) =>
+                                              typeof r?.url === "string" &&
+                                              /(youtube\.com|youtu\.be)\//i.test(
+                                                r.url,
+                                              ),
+                                          )
+                                          .map(
+                                            (r: {
+                                              url: string;
+                                              title: string;
+                                              content: string;
+                                              publishedDate: string;
+                                            }) => {
+                                              const url = r.url as string;
+                                              const isPlaylist =
+                                                /\/playlist\?list=/.test(url);
+                                              const type: YTItem["type"] =
+                                                isPlaylist
+                                                  ? "playlist"
+                                                  : "video"; // Default to video for any youtube link
+                                              return {
+                                                title: r.title ?? url,
+                                                url,
+                                                type,
+                                                snippet: r.content
+                                                  ? String(r.content).slice(
+                                                      0,
+                                                      220,
+                                                    )
+                                                  : undefined,
+                                                publishedDate:
+                                                  r.publishedDate ?? null,
+                                              } satisfies YTItem;
+                                            },
+                                          );
+                                      }
+                                    }
+                                  } catch {}
+
+                                  return (
+                                    <Tool
+                                      key={`tool-${message.id}-${idx}`}
+                                      defaultOpen={
+                                        toolPart.state !== "output-available"
+                                      }
+                                    >
+                                      <ToolHeader
+                                        type={
+                                          toolPart.type.replace(
+                                            "tool-",
+                                            "",
+                                          ) as `tool-${string}`
+                                        }
+                                        state={toolPart.state}
+                                      />
+                                      <ToolContent>
+                                        <ToolInput
+                                          input={
+                                            toolPart.input as Record<
+                                              string,
+                                              unknown
+                                            >
+                                          }
+                                        />
+
+                                        {/* Embed YouTube results if available */}
+                                        {isYouTubeTool &&
+                                        ytItems &&
+                                        ytItems.length > 0 ? (
+                                          <div className="p-4 pt-2">
+                                            <YouTubeEmbeds
+                                              items={ytItems}
+                                              limit={6}
+                                            />
+                                          </div>
+                                        ) : null}
+
+                                        {toolType === "tool-webSearchTool" && (
+                                          <ToolOutput
+                                            output={
+                                              rawOutput ? (
+                                                <Response>
+                                                  {typeof rawOutput === "string"
+                                                    ? rawOutput
+                                                    : JSON.stringify(
+                                                        rawOutput,
+                                                        null,
+                                                        2,
+                                                      )}
+                                                </Response>
+                                              ) : undefined
+                                            }
+                                            errorText={toolPart.errorText}
+                                          />
+                                        )}
+                                      </ToolContent>
+                                    </Tool>
+                                  );
+                                })}
+                            </div>
+                          )}
                           {message.parts.map((part, i) => {
                             switch (part.type) {
                               case "text":
@@ -365,87 +504,6 @@ export default function HomePage() {
                                 return null;
                             }
                           })}
-
-                          {/* Inline tool calls rendering for this message */}
-                          {message.parts.filter((p) =>
-                            p.type.startsWith("tool-"),
-                          ).length > 0 && (
-                            <div className="mt-2 space-y-2">
-                              {message.parts
-                                .filter((p) => p.type.startsWith("tool-"))
-                                .map((tp, idx) => {
-const toolPart = tp as unknown as ToolUIPart;
-                                  const rawOutput = toolPart.output;
-                                  const isYouTubeTool =
-                                    toolPart.type ===
-                                    "tool-youtubeSearchTool";
-                                  // Parse YouTube items if present
-                                  let ytItems: YTItem[] | undefined = undefined;
-                                  try {
-                                    if (isYouTubeTool && rawOutput) {
-                                      const obj =
-                                        typeof rawOutput === "string"
-                                          ? JSON.parse(rawOutput)
-                                          : rawOutput;
-                                      if (obj && Array.isArray(obj.items)) {
-                                        ytItems = obj.items;
-                                      }
-                                    }
-                                  } catch {}
-
-                                  return (
-                                    <Tool
-                                      key={`tool-${message.id}-${idx}`}
-                                      defaultOpen={
-                                        toolPart.state !== "output-available"
-                                      }
-                                    >
-                                      <ToolHeader
-                                        type={toolPart.type.replace(
-                                          "tool-",
-                                          "",
-                                        ) as `tool-${string}`}
-                                        state={toolPart.state}
-                                      />
-                                      <ToolContent>
-                                         <ToolInput
-                                             input={toolPart.input as Record<string, unknown>}
-                                           />
-
-                                        {/* Embed YouTube results if available */}
-                                        {isYouTubeTool &&
-                                        ytItems &&
-                                        ytItems.length > 0 ? (
-                                          <div className="p-4 pt-2">
-                                            <YouTubeEmbeds
-                                              items={ytItems}
-                                              limit={6}
-                                            />
-                                          </div>
-                                        ) : null}
-
-                                        <ToolOutput
-                                          output={
-                                            rawOutput ? (
-                                              <Response>
-                                                {typeof rawOutput === "string"
-                                                  ? rawOutput
-                                                  : JSON.stringify(
-                                                      rawOutput,
-                                                      null,
-                                                      2,
-                                                    )}
-                                              </Response>
-                                            ) : undefined
-                                          }
-                                          errorText={toolPart.errorText}
-                                        />
-                                      </ToolContent>
-                                    </Tool>
-                                  );
-                                })}
-                            </div>
-                          )}
                         </MessageContent>
                       </Message>
                     </div>
@@ -455,22 +513,24 @@ const toolPart = tp as unknown as ToolUIPart;
                 <ConversationScrollButton />
               </Conversation>
 
-              <Suggestions>
-                {suggestions.map((suggestion) => (
-                  <Suggestion
-                    key={suggestion}
-                    onClick={handleSuggestionClick}
-                    suggestion={suggestion}
-                  />
-                ))}
-              </Suggestions>
+              <div className="py-3">
+                <Suggestions>
+                  {suggestions.map((suggestion) => (
+                    <Suggestion
+                      key={suggestion}
+                      onClick={handleSuggestionClick}
+                      suggestion={suggestion}
+                    />
+                  ))}
+                </Suggestions>
+              </div>
 
               <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={springTransition}
               >
-                <PromptInput onSubmit={handleSubmit} className="mt-4">
+                <PromptInput onSubmit={handleSubmit} className="mt-1">
                   <PromptInputTextarea
                     onChange={(e) => setInput(e.target.value)}
                     value={input}
@@ -482,7 +542,7 @@ const toolPart = tp as unknown as ToolUIPart;
                         onClick={() => setWebSearch(!webSearch)}
                       >
                         <GlobeIcon size={16} />
-                        <span>Search</span>
+                        <span className="hidden sm:inline">Search</span>
                       </PromptInputButton>
                       <PromptInputModelSelect
                         onValueChange={(value) => setModel(value)}

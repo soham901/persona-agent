@@ -355,7 +355,11 @@ function VideoCard({ item, showSnippet = true }: VideoCardProps) {
             {(item.viewCount || item.publishedDate) && (
               <div className="flex gap-4 text-xs text-muted-foreground">
                 {item.viewCount && <span>{item.viewCount} views</span>}
-                {item.publishedDate && <span>{item.publishedDate}</span>}
+                {item.publishedDate && (
+                  <span>
+                    {new Date(item.publishedDate).toLocaleDateString()}
+                  </span>
+                )}
               </div>
             )}
           </div>
