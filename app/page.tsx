@@ -47,6 +47,14 @@ import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { CometCard } from "@/components/ui/comet-card";
+import { ToolUIPart } from "ai";
+import {
+  Tool,
+  ToolContent,
+  ToolHeader,
+  ToolInput,
+  ToolOutput,
+} from "@/components/ai-elements/tool";
 
 const springTransition: Transition = {
   type: "spring",
@@ -105,6 +113,26 @@ const piyushSuggestions = [
   "What metrics should I monitor in production?",
 ];
 
+type WeatherToolInput = {
+  location: string;
+  units: "celsius" | "fahrenheit";
+};
+
+type WeatherToolOutput = {
+  location: string;
+  temperature: string;
+  conditions: string;
+  humidity: string;
+  windSpeed: string;
+  lastUpdated: string;
+};
+
+type WeatherToolUIPart = ToolUIPart<{
+  fetch_weather_data: {
+    input: WeatherToolInput;
+    output: WeatherToolOutput;
+  };
+}>;
 export default function HomePage() {
   const [showChat, setShowChat] = useState(false);
 
@@ -137,6 +165,16 @@ export default function HomePage() {
       { body: { model: model, webSearch: webSearch, persona: persona } },
     );
   };
+
+  const latestMessage = messages[messages.length - 1];
+  const weatherTool = latestMessage?.parts?.find(
+    (part) => part.type === "tool-fetch_weather_data",
+  ) as WeatherToolUIPart | undefined;
+
+  // Generic tool parts renderer (covers all tool calls like youtubeSearchTool)
+  const toolParts = latestMessage?.parts?.filter((p) =>
+    p.type.startsWith("tool-"),
+  ) as ToolUIPart[] | undefined;
 
   return (
     <div className="relative min-h-dvh overflow-x-clip">
@@ -189,7 +227,7 @@ export default function HomePage() {
 
             <motion.p
               variants={fadeInUp}
-              className="mt-4 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg"
+              className="mt-4 max-w-2xl text-pretty text-base text-muted-foreground md:text-lg text-center"
             >
               Build AI chats that feel human. Pick a ready-made persona or
               create your own, and start real conversations in minutes.
@@ -300,9 +338,9 @@ export default function HomePage() {
             initial="hidden"
             animate="show"
             exit={{ opacity: 0, y: 8 }}
-            className="max-w-4xl mx-auto p-6 relative size-full min-h-[80dvh]"
+            className="max-w-4xl mx-auto p-6 relative size-full min-h-screen"
           >
-            <div className="flex flex-col h-[80dvh]">
+            <div className="flex flex-col h-[94dvh]">
               <Conversation className="h-full">
                 <ConversationContent>
                   {messages.map((message) => (
@@ -361,6 +399,61 @@ export default function HomePage() {
                                 return null;
                             }
                           })}
+
+                          {/* Inline tool calls rendering for this message */}
+                          {message.parts.filter((p) =>
+                            p.type.startsWith("tool-"),
+                          ).length > 0 && (
+                            <div className="mt-2 space-y-2">
+                              {message.parts
+                                .filter((p) => p.type.startsWith("tool-"))
+                                .map((tp, idx) => {
+                                  const toolPart = tp as unknown as ToolUIPart;
+                                  return (
+                                    <Tool
+                                      key={`tool-${message.id}-${idx}`}
+                                      defaultOpen={
+                                        toolPart.state !== "output-available"
+                                      }
+                                    >
+                                      <ToolHeader
+                                        type={(toolPart as any).type.replace(
+                                          "tool-",
+                                          "",
+                                        )}
+                                        state={toolPart.state}
+                                      />
+                                      <ToolContent>
+                                        {(toolPart as any).input && (
+                                          <ToolInput
+                                            input={(toolPart as any).input}
+                                          />
+                                        )}
+                                        <ToolOutput
+                                          output={
+                                            (toolPart as any).output ? (
+                                              <Response>
+                                                {typeof (toolPart as any)
+                                                  .output === "string"
+                                                  ? (toolPart as any).output
+                                                  : JSON.stringify(
+                                                      (toolPart as any).output,
+                                                      null,
+                                                      2,
+                                                    )}
+                                              </Response>
+                                            ) : undefined
+                                          }
+                                          errorText={
+                                            (toolPart as any).errorText as any
+                                          }
+                                        />
+                                      </ToolContent>
+                                    </Tool>
+                                  );
+                                })}
+                            </div>
+                          )}
                         </MessageContent>
                       </Message>
                     </div>

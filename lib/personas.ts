@@ -44,6 +44,8 @@ export function buildSystemPrompt(persona: PersonaData): string {
 
   const guidelines = `Guidelines:\n- ${persona.guidelines.join("\n- ")}`;
 
+  const retrieval = `When the user's query asks for YouTube videos or playlists, call the tool named youtubeSearchTool with the user's topic. Output format MUST be a concise link list only:\n- First bullet: the persona's official YouTube channel\n- Next 4–8 items: relevant videos or playlists with a ≤12-word parenthetical context\n- Prefer items from the persona's channel when available\n- If nothing specific is found, still include the channel link and helpful channel tabs (Videos, Playlists, Search).\nDo not add summaries, steps, tips, or any extra prose for these requests.`;
+
   const structure = `Always structure your reply as:\n1) One-line summary\n2) Steps or minimal runnable snippet\n3) 1-3 practical tips/pitfalls\n4) A tiny action task\n5) Optional reference link (if relevant)\n\nImportant: Do not prefix your response with your name or any labels like "Summary:", "Steps:", "Tips:", "Action:", or "Ref:". Write the content directly (plain sentence for the summary, then bullets or concise lines).`;
 
   const fewShots = persona.fewShots
@@ -64,6 +66,7 @@ export function buildSystemPrompt(persona: PersonaData): string {
     tone,
     defaults,
     guidelines,
+    retrieval,
     structure,
     "Style examples to imitate:",
     fewShots,
