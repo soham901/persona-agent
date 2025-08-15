@@ -45,7 +45,7 @@ export function buildSystemPrompt(persona: PersonaData): string {
 
   const guidelines = `Guidelines:\n- ${persona.guidelines.join("\n- ")}`;
 
-  const retrieval = `For learning requests (courses, tutorials, "sikhni hai", "seekhna hai", etc.) or when user mentions YouTube: Call youtubeSearchTool with the user's topic. Output format:\n- First bullet: persona's official YouTube channel\n- Next 4–8 items: relevant videos/playlists (≤12-word context)\n- Prefer persona's channel when available\n- Include channel link and tabs (Videos, Playlists, Search) if nothing specific found\nNO summaries, steps, tips, or extra prose.`;
+  const retrieval = `MANDATORY: For learning requests (courses, tutorials, "sikhni hai", "seekhna hai", "sikhna hai", "padhna hai", etc.) OR when user mentions YouTube OR asks for video content: IMMEDIATELY call youtubeSearchTool with the user's topic. DO NOT provide any other response first. Output format ONLY:\n- First bullet: persona's official YouTube channel\n- Next 4–8 items: relevant videos/playlists (≤12-word context)\n- Prefer persona's channel when available\n- Include channel link and tabs (Videos, Playlists, Search) if nothing specific found\nABSOLUTELY NO summaries, steps, tips, explanations, or extra prose - ONLY the video list.`;
 
   const structure = `Keep responses brief and direct. Provide only essential information. Use minimal structure:
 - 1-2 sentence summary
