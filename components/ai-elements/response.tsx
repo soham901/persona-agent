@@ -6,7 +6,7 @@ import { memo, isValidElement } from "react";
 import ReactMarkdown, { type Options } from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
-import remarkMath from "remark-math";
+import remarkMath from "remarkMath";
 import { cn } from "@/lib/utils";
 import "katex/dist/katex.min.css";
 import hardenReactMarkdown from "harden-react-markdown";
@@ -180,17 +180,17 @@ export type ResponseProps = HTMLAttributes<HTMLDivElement> & {
 
 const components: Options["components"] = {
   ol: ({ children, className, ...props }) => (
-    <ol className={cn("ml-4 list-outside list-decimal space-y-1", className)} {...props}>
+    <ol className={cn("ml-4 list-outside list-decimal space-y-0.5", className)} {...props}>
       {children}
     </ol>
   ),
   li: ({ children, className, ...props }) => (
-    <li className={cn("py-0.5", className)} {...props}>
+    <li className={cn("py-0.25", className)} {...props}>
       {children}
     </li>
   ),
   ul: ({ children, className, ...props }) => (
-    <ul className={cn("ml-4 list-outside list-disc space-y-1", className)} {...props}>
+    <ul className={cn("ml-4 list-outside list-disc space-y-0.5", className)} {...props}>
       {children}
     </ul>
   ),
@@ -211,7 +211,7 @@ const components: Options["components"] = {
   ),
   h1: ({ children, className, ...props }) => (
     <h1
-      className={cn("mt-4 mb-1 font-semibold text-2xl", className)}
+      className={cn("mt-2 mb-0.5 font-semibold text-xl", className)}
       {...props}
     >
       {children}
@@ -219,37 +219,37 @@ const components: Options["components"] = {
   ),
   h2: ({ children, className, ...props }) => (
     <h2
-      className={cn("mt-4 mb-1 font-semibold text-xl", className)}
+      className={cn("mt-2 mb-0.5 font-semibold text-lg", className)}
       {...props}
     >
       {children}
     </h2>
   ),
   h3: ({ children, className, ...props }) => (
-    <h3 className={cn("mt-4 mb-1 font-semibold text-lg", className)} {...props}>
+    <h3 className={cn("mt-2 mb-0.5 font-semibold text-base", className)} {...props}>
       {children}
     </h3>
   ),
   h4: ({ children, className, ...props }) => (
-    <h4 className={cn("mt-4 mb-1 font-semibold text-base", className)} {...props}>
+    <h4 className={cn("mt-2 mb-0.5 font-semibold text-sm", className)} {...props}>
       {children}
     </h4>
   ),
   h5: ({ children, className, ...props }) => (
     <h5
-      className={cn("mt-4 mb-1 font-semibold text-base", className)}
+      className={cn("mt-2 mb-0.5 font-semibold text-sm", className)}
       {...props}
     >
       {children}
     </h5>
   ),
   h6: ({ children, className, ...props }) => (
-    <h6 className={cn("mt-4 mb-1 font-semibold text-sm", className)} {...props}>
+    <h6 className={cn("mt-2 mb-0.5 font-semibold text-xs", className)} {...props}>
       {children}
     </h6>
   ),
   table: ({ children, className, ...props }) => (
-    <div className="my-3 overflow-x-auto">
+    <div className="my-2 overflow-x-auto">
       <table
         className={cn("w-full border-collapse border border-border", className)}
         {...props}
@@ -275,21 +275,21 @@ const components: Options["components"] = {
   ),
   th: ({ children, className, ...props }) => (
     <th
-      className={cn("px-3 py-1.5 text-left font-semibold text-sm", className)}
+      className={cn("px-2 py-1 text-left font-semibold text-xs", className)}
       {...props}
     >
       {children}
     </th>
   ),
   td: ({ children, className, ...props }) => (
-    <td className={cn("px-3 py-1.5 text-sm", className)} {...props}>
+    <td className={cn("px-2 py-1 text-xs", className)} {...props}>
       {children}
     </td>
   ),
   blockquote: ({ children, className, ...props }) => (
     <blockquote
       className={cn(
-        "my-3 border-l-3 border-muted-foreground/30 pl-3 italic text-muted-foreground",
+        "my-2 border-l-2 border-muted-foreground/30 pl-2 italic text-muted-foreground text-sm",
         className,
       )}
       {...props}
@@ -308,7 +308,7 @@ const components: Options["components"] = {
     return (
       <code
         className={cn(
-          "rounded bg-muted px-1 py-0.5 font-mono text-sm",
+          "rounded bg-muted px-0.5 py-0.25 font-mono text-xs",
           className,
         )}
         {...props}
@@ -352,7 +352,7 @@ const components: Options["components"] = {
 
     return (
       <CodeBlock
-        className={cn("my-3 h-auto", className)}
+        className={cn("my-2 h-auto", className)}
         code={code}
         language={language}
       >

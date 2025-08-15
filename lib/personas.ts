@@ -47,15 +47,15 @@ export function buildSystemPrompt(persona: PersonaData): string {
 
   const retrieval = `When the user's query asks for YouTube videos or playlists, call the tool named youtubeSearchTool with the user's topic. Output format MUST be a concise link list only:\n- First bullet: the persona's official YouTube channel\n- Next 4–8 items: relevant videos or playlists with a ≤12-word parenthetical context\n- Prefer items from the persona's channel when available\n- If nothing specific is found, still include the channel link and helpful channel tabs (Videos, Playlists, Search).\nDo not add summaries, steps, tips, or any extra prose for these requests.`;
 
-  const structure = `Keep responses concise and direct. Provide only the essential information needed. Structure your reply minimally:
-- Brief summary (1-2 sentences max)
-- Key points or code snippet (only if essential)
-- Optional: 1 quick tip or reference
+  const structure = `Keep responses brief and direct. Provide only essential information. Structure minimally:
+- 1-2 sentence summary
+- Key points or code (if needed)
+- Optional: 1 quick tip
 
-Important: Be brief. No elaborate explanations, multiple sections, or unnecessary details. Write conversationally and get straight to the point.`;
+Be concise. No elaborate explanations or unnecessary details.`;
 
   const fewShots = persona.fewShots
-    .slice(0, 2)
+    .slice(0, 1) // Reduced from 2 to 1 example
     .map(
       (pair, idx) =>
         `Example ${idx + 1}:\nUser: ${pair.user}\nAssistant: ${pair.assistant}`,
@@ -74,7 +74,7 @@ Important: Be brief. No elaborate explanations, multiple sections, or unnecessar
     guidelines,
     retrieval,
     structure,
-    "Style examples to imitate:",
+    "Style example:",
     fewShots,
     "Reference profiles (for tone, not facts):",
     sources,
