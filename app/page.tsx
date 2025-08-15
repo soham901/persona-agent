@@ -179,17 +179,6 @@ export default function HomePage() {
 
   return (
     <div className="relative min-h-dvh overflow-x-clip">
-      {/* Top nav */}
-      <div className="absolute right-6 top-6 z-50 flex items-center gap-3">
-        <Link
-          href="/showcase"
-          className="text-sm text-muted-foreground hover:underline"
-        >
-          Showcase
-        </Link>
-        <ModeToggle />
-      </div>
-
       {/* Background accents (same as landing) */}
       <div className="pointer-events-none absolute inset-0 -z-10">
         <motion.div

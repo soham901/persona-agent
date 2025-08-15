@@ -8,6 +8,7 @@ export type FewShotPair = {
 
 export type PersonaData = {
   id: "hitesh" | "piyush";
+  bio: string;
   displayName: string;
   tone: {
     language: string;
