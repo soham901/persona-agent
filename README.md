@@ -17,17 +17,14 @@ pnpm install
 
 2. Environment variables (choose what you need):
 
-- `OPENAI_API_KEY` for `openai/gpt-4o`
-- `DEEPSEEK_API_KEY` for `deepseek/deepseek-r1`
-- `PERPLEXITY_API_KEY` if using web search toggle (optional)
+- `AI_GATEWAY_API_KEY` for using LLMs
+- `EXA_API_KEY` if using web search
 
-Add to `.env.local`:
+Add to `.env`:
 
 ```bash
-OPENAI_API_KEY=sk-...
-# Optional
-DEEPSEEK_API_KEY=...
-PERPLEXITY_API_KEY=...
+AI_GATEWAY_API_KEY=...
+EXA_API_KEY=...
 ```
 
 3. Run locally
