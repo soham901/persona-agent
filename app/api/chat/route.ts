@@ -32,6 +32,16 @@ const webSearchTool = tool({
   },
 });
 
+const youtubeTool = tool({
+  description: "Search for the video/playlist for an query",
+  inputSchema: z.object({
+    query: z.string().min(1).max(100).describe("The search query"),
+  }),
+  execute: async ({ query }) => {
+
+  },
+});
+
 export async function POST(req: Request) {
   const {
     messages,
