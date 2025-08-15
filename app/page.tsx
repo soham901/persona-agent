@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { useChat } from "@ai-sdk/react";
-import { GlobeIcon } from "lucide-react";
 import Image from "next/image";
 import {
   motion,
@@ -120,7 +119,6 @@ export default function HomePage() {
   const [input, setInput] = useState("");
   const [model, setModel] = useState<string>(models[0].value);
   const [persona, setPersona] = useState<PersonaId>("hitesh");
-  const [webSearch, setWebSearch] = useState(false);
   const { messages, sendMessage, status } = useChat();
 
   const suggestions = useMemo(() => {
@@ -133,7 +131,7 @@ export default function HomePage() {
       sendMessage(
         { text: input },
         {
-          body: { model: model, webSearch: webSearch, persona: persona },
+          body: { model: model, webSearch: true, persona: persona },
         },
       );
       setInput("");
@@ -143,7 +141,7 @@ export default function HomePage() {
   const handleSuggestionClick = (suggestion: string) => {
     sendMessage(
       { text: suggestion },
-      { body: { model: model, webSearch: webSearch, persona: persona } },
+      { body: { model: model, webSearch: true, persona: persona } },
     );
   };
 
@@ -537,13 +535,6 @@ export default function HomePage() {
                   />
                   <PromptInputToolbar>
                     <PromptInputTools>
-                      <PromptInputButton
-                        variant={webSearch ? "default" : "ghost"}
-                        onClick={() => setWebSearch(!webSearch)}
-                      >
-                        <GlobeIcon size={16} />
-                        <span className="hidden sm:inline">Search</span>
-                      </PromptInputButton>
                       <PromptInputModelSelect
                         onValueChange={(value) => setModel(value)}
                         value={model}
