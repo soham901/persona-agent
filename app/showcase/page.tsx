@@ -143,7 +143,7 @@ export default function ShowcasePage() {
                           <h3 className="text-xl font-bold">Guidelines</h3>
                         </div>
                         <ul className="space-y-2 text-muted-foreground">
-                          {p.guidelines.map((g, i) => (
+                          {p.guidelines.map((g) => (
                             <li key={g} className="flex items-start gap-3">
                               <span className="text-muted-foreground mt-1">
                                 •
@@ -162,7 +162,7 @@ export default function ShowcasePage() {
                           <h3 className="text-xl font-bold">Sources</h3>
                         </div>
                         <ul className="space-y-2 text-muted-foreground">
-                          {p.sources.map((s, i) => (
+                          {p.sources.map((s) => (
                             <li key={s.url} className="flex items-start gap-3">
                               <span className="text-muted-foreground mt-1">
                                 •

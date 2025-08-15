@@ -115,9 +115,6 @@ function parseIncompleteMarkdown(text: string): string {
   const inlineCodeMatch = result.match(inlineCodePattern);
   if (inlineCodeMatch) {
     // Check if we're dealing with a code block (triple backticks)
-    const hasCodeBlockStart = result.includes("```");
-    const codeBlockPattern = /```[\s\S]*?```/g;
-    const completeCodeBlocks = (result.match(codeBlockPattern) || []).length;
     const allTripleBackticks = (result.match(/```/g) || []).length;
 
     // If we have an odd number of ``` sequences, we're inside an incomplete code block
@@ -182,27 +179,27 @@ export type ResponseProps = HTMLAttributes<HTMLDivElement> & {
 };
 
 const components: Options["components"] = {
-  ol: ({ node, children, className, ...props }) => (
+  ol: ({ children, className, ...props }) => (
     <ol className={cn("ml-4 list-outside list-decimal", className)} {...props}>
       {children}
     </ol>
   ),
-  li: ({ node, children, className, ...props }) => (
+  li: ({ children, className, ...props }) => (
     <li className={cn("py-1", className)} {...props}>
       {children}
     </li>
   ),
-  ul: ({ node, children, className, ...props }) => (
+  ul: ({ children, className, ...props }) => (
     <ul className={cn("ml-4 list-outside list-decimal", className)} {...props}>
       {children}
     </ul>
   ),
-  strong: ({ node, children, className, ...props }) => (
+  strong: ({ children, className, ...props }) => (
     <span className={cn("font-semibold", className)} {...props}>
       {children}
     </span>
   ),
-  a: ({ node, children, className, ...props }) => (
+  a: ({ children, className, ...props }) => (
     <a
       className={cn("font-medium text-primary underline", className)}
       rel="noreferrer"
@@ -212,7 +209,7 @@ const components: Options["components"] = {
       {children}
     </a>
   ),
-  h1: ({ node, children, className, ...props }) => (
+  h1: ({ children, className, ...props }) => (
     <h1
       className={cn("mt-6 mb-2 font-semibold text-3xl", className)}
       {...props}
@@ -220,7 +217,7 @@ const components: Options["components"] = {
       {children}
     </h1>
   ),
-  h2: ({ node, children, className, ...props }) => (
+  h2: ({ children, className, ...props }) => (
     <h2
       className={cn("mt-6 mb-2 font-semibold text-2xl", className)}
       {...props}
@@ -228,17 +225,17 @@ const components: Options["components"] = {
       {children}
     </h2>
   ),
-  h3: ({ node, children, className, ...props }) => (
+  h3: ({ children, className, ...props }) => (
     <h3 className={cn("mt-6 mb-2 font-semibold text-xl", className)} {...props}>
       {children}
     </h3>
   ),
-  h4: ({ node, children, className, ...props }) => (
+  h4: ({ children, className, ...props }) => (
     <h4 className={cn("mt-6 mb-2 font-semibold text-lg", className)} {...props}>
       {children}
     </h4>
   ),
-  h5: ({ node, children, className, ...props }) => (
+  h5: ({ children, className, ...props }) => (
     <h5
       className={cn("mt-6 mb-2 font-semibold text-base", className)}
       {...props}
@@ -246,12 +243,12 @@ const components: Options["components"] = {
       {children}
     </h5>
   ),
-  h6: ({ node, children, className, ...props }) => (
+  h6: ({ children, className, ...props }) => (
     <h6 className={cn("mt-6 mb-2 font-semibold text-sm", className)} {...props}>
       {children}
     </h6>
   ),
-  table: ({ node, children, className, ...props }) => (
+  table: ({ children, className, ...props }) => (
     <div className="my-4 overflow-x-auto">
       <table
         className={cn("w-full border-collapse border border-border", className)}
@@ -261,22 +258,22 @@ const components: Options["components"] = {
       </table>
     </div>
   ),
-  thead: ({ node, children, className, ...props }) => (
+  thead: ({ children, className, ...props }) => (
     <thead className={cn("bg-muted/50", className)} {...props}>
       {children}
     </thead>
   ),
-  tbody: ({ node, children, className, ...props }) => (
+  tbody: ({ children, className, ...props }) => (
     <tbody className={cn("divide-y divide-border", className)} {...props}>
       {children}
     </tbody>
   ),
-  tr: ({ node, children, className, ...props }) => (
+  tr: ({ children, className, ...props }) => (
     <tr className={cn("border-b border-border", className)} {...props}>
       {children}
     </tr>
   ),
-  th: ({ node, children, className, ...props }) => (
+  th: ({ children, className, ...props }) => (
     <th
       className={cn("px-4 py-2 text-left font-semibold text-sm", className)}
       {...props}
@@ -284,12 +281,12 @@ const components: Options["components"] = {
       {children}
     </th>
   ),
-  td: ({ node, children, className, ...props }) => (
+  td: ({ children, className, ...props }) => (
     <td className={cn("px-4 py-2 text-sm", className)} {...props}>
       {children}
     </td>
   ),
-  blockquote: ({ node, children, className, ...props }) => (
+  blockquote: ({ children, className, ...props }) => (
     <blockquote
       className={cn(
         "my-4 border-l-4 border-muted-foreground/30 pl-4 italic text-muted-foreground",
@@ -300,8 +297,8 @@ const components: Options["components"] = {
       {children}
     </blockquote>
   ),
-  code: ({ node, className, ...props }) => {
-    const inline = node?.position?.start.line === node?.position?.end.line;
+  code: ({ className, ...props }) => {
+    const inline = props.node?.position?.start.line === props.node?.position?.end.line;
 
     if (!inline) {
       return <code className={className} {...props} />;
@@ -319,14 +316,13 @@ const components: Options["components"] = {
   },
   pre: (rawProps) => {
     type UnknownPreProps = React.ComponentPropsWithoutRef<"pre"> & {
-      node?: unknown;
       children?: React.ReactNode;
       className?: string;
     };
-    const { node, className, children } = rawProps as UnknownPreProps;
+    const { className, children } = rawProps as UnknownPreProps;
     let language = "javascript";
 
-    const nodeElement = node as
+    const nodeElement = rawProps.node as
       | { properties?: { className?: string } }
       | undefined;
     if (typeof nodeElement?.properties?.className === "string") {

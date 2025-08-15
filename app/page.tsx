@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import Link from "next/link";
 import { useChat } from "@ai-sdk/react";
 import { GlobeIcon } from "lucide-react";
+import Image from "next/image";
 import {
   motion,
   AnimatePresence,
@@ -44,7 +44,6 @@ import {
 } from "@/components/ai-elements/reasoning";
 import { Loader } from "@/components/ai-elements/loader";
 import { Suggestion, Suggestions } from "@/components/ai-elements/suggestion";
-import { ModeToggle } from "@/components/ui/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { CometCard } from "@/components/ui/comet-card";
 import { ToolUIPart } from "ai";
@@ -56,6 +55,7 @@ import {
   ToolOutput,
 } from "@/components/ai-elements/tool";
 import { YouTubeEmbeds } from "@/components/ai-elements/youtube-embeds";
+import type { YTItem } from "@/components/ai-elements/youtube-embeds";
 
 const springTransition: Transition = {
   type: "spring",
@@ -114,26 +114,9 @@ const piyushSuggestions = [
   "What metrics should I monitor in production?",
 ];
 
-type WeatherToolInput = {
-  location: string;
-  units: "celsius" | "fahrenheit";
-};
 
-type WeatherToolOutput = {
-  location: string;
-  temperature: string;
-  conditions: string;
-  humidity: string;
-  windSpeed: string;
-  lastUpdated: string;
-};
 
-type WeatherToolUIPart = ToolUIPart<{
-  fetch_weather_data: {
-    input: WeatherToolInput;
-    output: WeatherToolOutput;
-  };
-}>;
+
 export default function HomePage() {
   const [showChat, setShowChat] = useState(false);
 
@@ -167,15 +150,7 @@ export default function HomePage() {
     );
   };
 
-  const latestMessage = messages[messages.length - 1];
-  const weatherTool = latestMessage?.parts?.find(
-    (part) => part.type === "tool-fetch_weather_data",
-  ) as WeatherToolUIPart | undefined;
-
-  // Generic tool parts renderer (covers all tool calls like youtubeSearchTool)
-  const toolParts = latestMessage?.parts?.filter((p) =>
-    p.type.startsWith("tool-"),
-  ) as ToolUIPart[] | undefined;
+  
 
   return (
     <div className="relative min-h-dvh overflow-x-clip">
@@ -255,11 +230,12 @@ export default function HomePage() {
                 >
                   <div className="mx-2 flex-1">
                     <div className="relative mt-2 aspect-[16/9] w-full">
-                      <img
+                      <Image
                         loading="lazy"
                         className="absolute inset-0 h-full w-full rounded-[16px] bg-[#000000] object-cover contrast-75"
                         alt="Invite background"
                         src="/GenAI_with_JS_lyst1753790039806.jpg"
+                        fill
                         style={{
                           boxShadow: "rgba(0, 0, 0, 0.05) 0px 5px 6px 0px",
                           opacity: 1,
@@ -398,13 +374,13 @@ export default function HomePage() {
                               {message.parts
                                 .filter((p) => p.type.startsWith("tool-"))
                                 .map((tp, idx) => {
-                                  const toolPart = tp as unknown as ToolUIPart;
-                                  const rawOutput = (toolPart as any).output;
+const toolPart = tp as unknown as ToolUIPart;
+                                  const rawOutput = toolPart.output;
                                   const isYouTubeTool =
-                                    (toolPart as any).type ===
+                                    toolPart.type ===
                                     "tool-youtubeSearchTool";
                                   // Parse YouTube items if present
-                                  let ytItems: any[] | undefined = undefined;
+                                  let ytItems: YTItem[] | undefined = undefined;
                                   try {
                                     if (isYouTubeTool && rawOutput) {
                                       const obj =
@@ -425,18 +401,16 @@ export default function HomePage() {
                                       }
                                     >
                                       <ToolHeader
-                                        type={(toolPart as any).type.replace(
+                                        type={toolPart.type.replace(
                                           "tool-",
                                           "",
-                                        )}
+                                        ) as `tool-${string}`}
                                         state={toolPart.state}
                                       />
                                       <ToolContent>
-                                        {(toolPart as any).input && (
-                                          <ToolInput
-                                            input={(toolPart as any).input}
-                                          />
-                                        )}
+                                         <ToolInput
+                                             input={toolPart.input as Record<string, unknown>}
+                                           />
 
                                         {/* Embed YouTube results if available */}
                                         {isYouTubeTool &&
@@ -464,9 +438,7 @@ export default function HomePage() {
                                               </Response>
                                             ) : undefined
                                           }
-                                          errorText={
-                                            (toolPart as any).errorText as any
-                                          }
+                                          errorText={toolPart.errorText}
                                         />
                                       </ToolContent>
                                     </Tool>

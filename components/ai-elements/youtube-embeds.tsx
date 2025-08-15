@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -213,7 +214,7 @@ function VideoCard({ item, showSnippet = true }: VideoCardProps) {
   React.useEffect(() => {
     if (!item.videoId || !thumbnailUrl) return;
 
-    const img = new Image();
+    const img = new window.Image();
     img.crossOrigin = "anonymous";
 
     const handleLoad = () => {
@@ -274,11 +275,12 @@ function VideoCard({ item, showSnippet = true }: VideoCardProps) {
                   {!imageLoaded && (
                     <Skeleton className="absolute inset-0 h-full w-full" />
                   )}
-                  <img
+                  <Image
                     src={thumbnailUrl || "/placeholder.svg"}
                     alt={`Thumbnail for ${item.title}`}
+                    fill
                     className={cn(
-                      "h-full w-full object-cover transition-opacity duration-300",
+                      "object-cover transition-opacity duration-300",
                       imageLoaded ? "opacity-100" : "opacity-0",
                     )}
                     loading="lazy"
